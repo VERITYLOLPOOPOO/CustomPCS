@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f7f5" />
+  <title>Custom PCs</title>
+  <meta name="description" content="A clean, fast custom PC builder that turns plain-English part requests into compatible suggestions." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+
+  <header class="site-header shell">
+    <a class="brand" href="#" aria-label="Custom PCs home">
+      <span class="brand-mark">CP</span>
+      <span>Custom PCs</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#builder">Builder</a>
+      <a href="#catalog">Parts</a>
+      <a href="#summary">Summary</a>
+    </nav>
+    <button id="themeButton" class="icon-button" type="button" aria-label="Toggle dark mode">◐</button>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="eyebrow">BUILD IT YOUR WAY</div>
+      <h1>Type the PC part you want.<br><span>We’ll do the nerdy bit.</span></h1>
+      <p class="hero-copy">Search in normal language — “256GB DDR5 white”, “cheap AM5 motherboard”, “8TB SSD”, or even a specific model name. Add parts, check compatibility, and keep the whole build in one place.</p>
+      <div class="hero-actions">
+        <a class="primary-button" href="#builder">Start a build</a>
+        <button id="demoButton" class="secondary-button" type="button">Load dream build</button>
+      </div>
+      <div class="hero-stats" aria-label="App features">
+        <div><strong>Plain English</strong><span>part search</span></div>
+        <div><strong>Live checks</strong><span>compatibility hints</span></div>
+        <div><strong>Local save</strong><span>keeps your build</span></div>
+      </div>
+    </section>
+
+    <section id="builder" class="shell builder-grid">
+      <div class="panel search-panel">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">SMART SEARCH</div>
+            <h2>What are we hunting for?</h2>
+          </div>
+          <button id="clearSearch" class="text-button" type="button">Clear</button>
+        </div>
+
+        <form id="searchForm" class="search-box">
+          <span class="search-icon">⌕</span>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="e.g. 256GB DDR5 white" aria-label="Search PC parts" />
+          <button class="search-submit" type="submit">Find</button>
+        </form>
+
+        <div class="quick-chips" aria-label="Example searches">
+          <button type="button" data-query="256GB DDR5 white">256GB DDR5 white</button>
+          <button type="button" data-query="best AM5 CPU">best AM5 CPU</button>
+          <button type="button" data-query="8TB SSD">8TB SSD</button>
+          <button type="button" data-query="1600W PSU">1600W PSU</button>
+        </div>
+
+        <div id="smartNote" class="smart-note" hidden></div>
+        <div id="results" class="results" aria-live="polite"></div>
+      </div>
+
+      <aside id="summary" class="panel build-panel">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">YOUR BUILD</div>
+            <h2>Current machine</h2>
+          </div>
+          <button id="resetBuild" class="text-button danger" type="button">Reset</button>
+        </div>
+
+        <div id="buildTier" class="tier-card">
+          <span class="tier-dot"></span>
+          <div><strong>No parts yet</strong><span>Add something to start</span></div>
+        </div>
+
+        <div id="buildList" class="build-list"></div>
+
+        <div class="build-total">
+          <div><span>Estimated total</span><strong id="totalPrice">$0</strong></div>
+          <div><span>Estimated draw</span><strong id="totalPower">0 W</strong></div>
+        </div>
+
+        <div id="compatibility" class="compatibility-card neutral">
+          <strong>Compatibility</strong>
+          <span>Add a CPU and motherboard to begin checking.</span>
+        </div>
+
+        <div class="build-actions">
+          <button id="copyBuild" class="primary-button full" type="button">Copy build</button>
+          <button id="downloadBuild" class="secondary-button full" type="button">Export .txt</button>
+        </div>
+      </aside>
+    </section>
+
+    <section id="catalog" class="shell catalog-section">
+      <div class="section-heading catalog-heading">
+        <div>
+          <div class="eyebrow">PART LIBRARY</div>
+          <h2>Browse by category</h2>
+        </div>
+        <p>These sample parts keep the demo fast and offline. You can also add any part manually.</p>
+      </div>
+
+      <div id="categoryTabs" class="category-tabs"></div>
+      <div id="catalogGrid" class="catalog-grid"></div>
+
+      <div class="manual-card">
+        <div>
+          <div class="eyebrow">CAN’T FIND IT?</div>
+          <h3>Add any part manually</h3>
+          <p>Perfect for rare hardware, collector editions, and prices you found elsewhere.</p>
+        </div>
+        <button id="openManual" class="secondary-button" type="button">Add custom part</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="manualDialog" class="dialog">
+    <form id="manualForm" method="dialog">
+      <div class="dialog-top">
+        <div>
+          <div class="eyebrow">CUSTOM PART</div>
+          <h2>Add hardware</h2>
+        </div>
+        <button id="closeManual" class="icon-button" type="button" aria-label="Close">×</button>
+      </div>
+
+      <label>Category
+        <select id="manualCategory" required></select>
+      </label>
+      <label>Part name
+        <input id="manualName" required placeholder="e.g. ASUS ROG Matrix RTX 5090" />
+      </label>
+      <div class="two-col">
+        <label>Price (USD)
+          <input id="manualPrice" type="number" min="0" step="0.01" value="0" required />
+        </label>
+        <label>Power (W)
+          <input id="manualPower" type="number" min="0" step="1" value="0" />
+        </label>
+      </div>
+      <label>Notes / specs
+        <input id="manualSpecs" placeholder="white, AM5, DDR5, 360mm…" />
+      </label>
+      <button class="primary-button full" type="submit">Add to build</button>
+    </form>
+  </dialog>
+
+  <footer class="shell footer">
+    <span>Custom PCs</span>
+    <span>Build ridiculous things responsibly.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
