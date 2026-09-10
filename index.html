@@ -3,102 +3,121 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7f7f5" />
+  <meta name="theme-color" content="#fbfaf7" />
   <title>Custom PCs</title>
-  <meta name="description" content="A clean, fast custom PC builder that turns plain-English part requests into compatible suggestions." />
+  <meta name="description" content="A sleek custom PC builder with plain-English part search, multiple saved builds, exports, and shareable build links." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-a"></div>
-  <div class="bg-orb orb-b"></div>
+  <div class="aurora aurora-a"></div>
+  <div class="aurora aurora-b"></div>
 
   <header class="site-header shell">
-    <a class="brand" href="#" aria-label="Custom PCs home">
+    <a class="brand" href="#builder" aria-label="Custom PCs home">
       <span class="brand-mark">CP</span>
-      <span>Custom PCs</span>
+      <span class="brand-copy"><strong>Custom PCs</strong><small>Build without the spreadsheet.</small></span>
     </a>
+
     <nav class="nav-links" aria-label="Primary navigation">
       <a href="#builder">Builder</a>
       <a href="#catalog">Parts</a>
-      <a href="#summary">Summary</a>
     </nav>
-    <button id="themeButton" class="icon-button" type="button" aria-label="Toggle dark mode">◐</button>
+
+    <div class="header-actions">
+      <button id="newBuildButton" class="secondary-button compact" type="button">＋ New Build</button>
+      <button id="settingsButton" class="icon-button" type="button" aria-label="Open settings" title="Settings">⚙</button>
+    </div>
   </header>
 
   <main>
     <section class="hero shell">
-      <div class="eyebrow">BUILD IT YOUR WAY</div>
-      <h1>Type the PC part you want.<br><span>We’ll do the nerdy bit.</span></h1>
-      <p class="hero-copy">Search in normal language — “256GB DDR5 white”, “cheap AM5 motherboard”, “8TB SSD”, or even a specific model name. Add parts, check compatibility, and keep the whole build in one place.</p>
+      <div class="eyebrow">CUSTOM PCS · BETA</div>
+      <h1>Build whatever you want.<br><span>We’ll keep it organized.</span></h1>
+      <p class="hero-copy">Type what you need in normal language — “32GB DDR5 white”, “best AM5 CPU”, “8TB SSD”, or a specific model. Keep multiple builds, save them, export them, and share them.</p>
       <div class="hero-actions">
-        <a class="primary-button" href="#builder">Start a build</a>
+        <a class="primary-button" href="#builder">Open builder</a>
         <button id="demoButton" class="secondary-button" type="button">Load dream build</button>
       </div>
       <div class="hero-stats" aria-label="App features">
         <div><strong>Plain English</strong><span>part search</span></div>
-        <div><strong>Live checks</strong><span>compatibility hints</span></div>
-        <div><strong>Local save</strong><span>keeps your build</span></div>
+        <div><strong>Multiple builds</strong><span>saved locally</span></div>
+        <div><strong>Shareable</strong><span>publish a build link</span></div>
       </div>
     </section>
 
-    <section id="builder" class="shell builder-grid">
-      <div class="panel search-panel">
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">SMART SEARCH</div>
-            <h2>What are we hunting for?</h2>
-          </div>
-          <button id="clearSearch" class="text-button" type="button">Clear</button>
+    <section id="builder" class="shell workspace">
+      <div class="workspace-topbar panel">
+        <div>
+          <div class="eyebrow">ACTIVE BUILD</div>
+          <input id="buildNameInput" class="build-name-input" value="Untitled Build" aria-label="Build name" />
         </div>
-
-        <form id="searchForm" class="search-box">
-          <span class="search-icon">⌕</span>
-          <input id="searchInput" type="search" autocomplete="off" placeholder="e.g. 256GB DDR5 white" aria-label="Search PC parts" />
-          <button class="search-submit" type="submit">Find</button>
-        </form>
-
-        <div class="quick-chips" aria-label="Example searches">
-          <button type="button" data-query="256GB DDR5 white">256GB DDR5 white</button>
-          <button type="button" data-query="best AM5 CPU">best AM5 CPU</button>
-          <button type="button" data-query="8TB SSD">8TB SSD</button>
-          <button type="button" data-query="1600W PSU">1600W PSU</button>
+        <div class="workspace-actions">
+          <span id="saveStatus" class="save-status">Saved locally</span>
+          <button id="saveBuildButton" class="secondary-button compact" type="button">Save build</button>
+          <button id="publishBuildButton" class="primary-button compact" type="button">Publish</button>
         </div>
-
-        <div id="smartNote" class="smart-note" hidden></div>
-        <div id="results" class="results" aria-live="polite"></div>
       </div>
 
-      <aside id="summary" class="panel build-panel">
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">YOUR BUILD</div>
-            <h2>Current machine</h2>
+      <div class="builder-grid">
+        <div class="panel search-panel">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">SMART SEARCH</div>
+              <h2>What are we hunting for?</h2>
+            </div>
+            <button id="clearSearch" class="text-button" type="button">Clear</button>
           </div>
-          <button id="resetBuild" class="text-button danger" type="button">Reset</button>
+
+          <form id="searchForm" class="search-box">
+            <span class="search-icon">⌕</span>
+            <input id="searchInput" type="search" autocomplete="off" placeholder="e.g. 32GB DDR5 white" aria-label="Search PC parts" />
+            <button class="search-submit" type="submit">Find</button>
+          </form>
+
+          <div class="quick-chips" aria-label="Example searches">
+            <button type="button" data-query="256GB DDR5 white">256GB DDR5 white</button>
+            <button type="button" data-query="best AM5 CPU">best AM5 CPU</button>
+            <button type="button" data-query="8TB SSD">8TB SSD</button>
+            <button type="button" data-query="1600W PSU">1600W PSU</button>
+          </div>
+
+          <div id="smartNote" class="smart-note" hidden></div>
+          <div id="results" class="results" aria-live="polite"></div>
         </div>
 
-        <div id="buildTier" class="tier-card">
-          <span class="tier-dot"></span>
-          <div><strong>No parts yet</strong><span>Add something to start</span></div>
-        </div>
+        <aside id="summary" class="panel build-panel">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">YOUR BUILD</div>
+              <h2>Current machine</h2>
+            </div>
+            <button id="resetBuild" class="text-button danger" type="button">Clear parts</button>
+          </div>
 
-        <div id="buildList" class="build-list"></div>
+          <div id="buildTier" class="tier-card">
+            <span class="tier-dot"></span>
+            <div><strong>No parts yet</strong><span>Add something to start</span></div>
+          </div>
 
-        <div class="build-total">
-          <div><span>Estimated total</span><strong id="totalPrice">$0</strong></div>
-          <div><span>Estimated draw</span><strong id="totalPower">0 W</strong></div>
-        </div>
+          <div id="buildList" class="build-list"></div>
 
-        <div id="compatibility" class="compatibility-card neutral">
-          <strong>Compatibility</strong>
-          <span>Add a CPU and motherboard to begin checking.</span>
-        </div>
+          <div class="build-total">
+            <div><span>Estimated total</span><strong id="totalPrice">$0</strong></div>
+            <div><span>Estimated draw</span><strong id="totalPower">0 W</strong></div>
+          </div>
 
-        <div class="build-actions">
-          <button id="copyBuild" class="primary-button full" type="button">Copy build</button>
-          <button id="downloadBuild" class="secondary-button full" type="button">Export .txt</button>
-        </div>
-      </aside>
+          <div id="compatibility" class="compatibility-card neutral">
+            <strong>Compatibility</strong>
+            <span>Add a CPU and motherboard to begin checking.</span>
+          </div>
+
+          <div class="build-actions three">
+            <button id="copyBuild" class="secondary-button full" type="button">Copy</button>
+            <button id="downloadBuild" class="secondary-button full" type="button">Save file</button>
+            <button id="publishBuildButtonAside" class="primary-button full" type="button">Publish</button>
+          </div>
+        </aside>
+      </div>
     </section>
 
     <section id="catalog" class="shell catalog-section">
@@ -107,7 +126,7 @@
           <div class="eyebrow">PART LIBRARY</div>
           <h2>Browse by category</h2>
         </div>
-        <p>These sample parts keep the demo fast and offline. You can also add any part manually.</p>
+        <p>The starter catalog works offline. Add any missing hardware manually.</p>
       </div>
 
       <div id="categoryTabs" class="category-tabs"></div>
@@ -154,6 +173,50 @@
       <button class="primary-button full" type="submit">Add to build</button>
     </form>
   </dialog>
+
+  <dialog id="settingsDialog" class="dialog settings-dialog">
+    <div class="settings-shell">
+      <aside class="settings-nav">
+        <div>
+          <div class="eyebrow">SETTINGS</div>
+          <h2>Workspace</h2>
+        </div>
+        <button class="settings-tab active" type="button">Builds</button>
+        <button id="closeSettings" class="settings-close" type="button">Done</button>
+      </aside>
+
+      <section class="settings-content">
+        <div class="settings-heading">
+          <div>
+            <div class="eyebrow">BUILDS</div>
+            <h2>Your build library</h2>
+            <p>Every build is kept on this device. Open one, duplicate it, export it, or publish a share link.</p>
+          </div>
+          <button id="settingsNewBuild" class="primary-button compact" type="button">＋ New Build</button>
+        </div>
+        <div id="buildLibrary" class="build-library"></div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="shareDialog" class="dialog share-dialog">
+    <div class="share-card">
+      <div class="dialog-top">
+        <div>
+          <div class="eyebrow">PUBLISHED</div>
+          <h2>Your build link is ready</h2>
+        </div>
+        <button id="closeShare" class="icon-button" type="button" aria-label="Close">×</button>
+      </div>
+      <p>Anyone with this link can open a copy of your build. The parts are encoded in the link, so no account is required.</p>
+      <div class="share-link-row">
+        <input id="shareLink" readonly aria-label="Share link" />
+        <button id="copyShareLink" class="primary-button compact" type="button">Copy</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <footer class="shell footer">
     <span>Custom PCs</span>
